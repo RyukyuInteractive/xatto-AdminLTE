@@ -12,3 +12,5 @@ export { Chart } from './Chart'
 export { Sparklines } from './Sparklines'
 
 export { VectorMap } from './VectorMap'
+
+export { Modal } from './Modal'
