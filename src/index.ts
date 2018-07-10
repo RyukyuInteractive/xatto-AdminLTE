@@ -6,3 +6,5 @@ export { Layout } from './Layout'
 export { PushMenu } from './PushMenu'
 export { TodoList } from './TodoList'
 export { Tree } from './Tree'
+
+export { Chart } from './Chart'
