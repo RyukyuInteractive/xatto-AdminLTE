@@ -1,0 +1,65 @@
+{
+  "name": "xatto-admin-lte",
+  "version": "0.0.1",
+  "main": "dist/xatto-admin-lte.js",
+  "author": "atomita",
+  "license": "MIT",
+  "scripts": {
+    "test": "jest",
+    "build": "npm run bundle:clean && npm run minify",
+    "bundle": "rollup --config",
+    "bundle:clean": "rm -rf ./dist && npm run bundle",
+    "minify": "uglifyjs dist/xatto-admin-lte.js -o dist/xatto-admin-lte.min.js -mc pure_funcs=['Object.defineProperty'] --source-map includeSources,url=dist/xatto-admin-lte.min.js.map",
+    "prepare": "npm run build",
+    "release": "npm run build && npm test && git commit -am $npm_package_version && git tag $npm_package_version && git push && git push --tags && npm publish"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "subTaskConcurrency": 1,
+    "linters": {
+      "src/**/*.ts": [
+        "prettier --write",
+        "tslint --fix",
+        "git add"
+      ]
+    }
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    },
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ]
+  },
+  "devDependencies": {
+    "hasky": "^3.0.2",
+    "jest": "^23.2.0",
+    "lint-staged": "^7.0.0",
+    "power-assert": "^1.6.0",
+    "prettier": "^1.11.1",
+    "rollup": "^0.57.1",
+    "rollup-plugin-typescript2": "^0.12.0",
+    "ts-jest": "^23.0.0",
+    "tslint": "^5.9.1",
+    "typescript": "^2.8.1",
+    "uglify-js": "^3.3.16"
+  },
+  "dependencies": {
+    "admin-lte": "^2.4.3",
+    "optimizated-deep-get-js": "^0.0.1",
+    "optimizated-deep-set-js": "^0.0.1",
+    "optimizated-flatten-object-js": "^0.0.1",
+    "xatto": "^0.1.11"
+  }
+}
