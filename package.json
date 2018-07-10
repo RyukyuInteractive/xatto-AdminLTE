@@ -57,9 +57,6 @@
   },
   "dependencies": {
     "admin-lte": "^2.4.3",
-    "optimizated-deep-get-js": "^0.0.1",
-    "optimizated-deep-set-js": "^0.0.1",
-    "optimizated-flatten-object-js": "^0.0.1",
     "xatto": "^0.1.11"
   }
 }

@@ -1,6 +1,7 @@
 import { x } from 'xatto'
 
-import { default as $ } from 'jquery'
+import * as jqueryProxy from 'jquery'
+const $ = jqueryProxy
 
 import 'jquery-sparkline'
 

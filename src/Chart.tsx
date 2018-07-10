@@ -1,12 +1,13 @@
 import { x } from 'xatto'
 
-import ChartJS from 'chart.js'
+import * as ChartJS from 'chart.js'
 
-import { default as $ } from 'jquery'
+import * as jqueryProxy from 'jquery'
+const $ = jqueryProxy
 
 import { deepSet, flattenObject, parseJson } from './helpers'
 
-export function Chart (attrs, children) {
+export function Chart ({ xa, ...attrs }, children) {
   return (
     <canvas
       {...attrs}
@@ -45,7 +46,7 @@ function onUpdateFactory (attrs) {
 }
 
 function onUpdate (element, attrs) {
-  const data = parseJson(attrs.data) || {}
+  const data: any = parseJson(attrs.data) || {}
 
   // // chart.js v2.6 and newer
   // element.chart.data = data
