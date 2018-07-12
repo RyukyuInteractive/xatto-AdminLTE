@@ -1,13 +1,13 @@
 import { x } from 'xatto'
 
-import * as ChartJS from 'chart.js'
+import * as Chart from 'chart.js'
 
 import * as jqueryProxy from 'jquery'
 const $ = jqueryProxy
 
 import { deepSet, flattenObject, parseJson } from './helpers'
 
-export function Chart ({ xa, ...attrs }, children) {
+export function ChartX ({ xa, ...attrs }, children) {
   return (
     <canvas
       {...attrs}
@@ -38,7 +38,7 @@ function onCreate (element, attrs) {
   // })
 
   const method = type[0].toUpperCase() + type.slice(1)
-  element.chart = new ChartJS(ctx)[method](data, options)
+  element.chart = new Chart(ctx)[method](data, options)
 }
 
 function onUpdateFactory (attrs) {
