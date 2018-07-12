@@ -2,6 +2,8 @@
   "name": "xatto-admin-lte",
   "version": "0.0.1",
   "main": "dist/xatto-admin-lte.js",
+  "ts:main": "src/index.ts",
+  "types": "dist/index.d.ts",
   "author": "atomita",
   "license": "MIT",
   "scripts": {
