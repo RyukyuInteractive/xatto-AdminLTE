@@ -15,7 +15,16 @@ export default {
       '*.test.ts',
       '**/*.test.ts',
       '*.test.tsx',
-      '**/*.test.tsx'
+      '**/*.test.tsx',
     ]
-  })]
+  })],
+  external: [
+    'admin-lte',
+    'bootstrap',
+    'chart.js',
+    'jquery',
+    'jquery-sparkline',
+    'jvectormap',
+    'xatto',
+  ],
 }
