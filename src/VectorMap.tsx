@@ -1,7 +1,6 @@
 import { x } from 'xatto'
 
-import * as jqueryProxy from 'jquery'
-const $ = jqueryProxy
+import { default as jQuery } from 'jquery'
 
 import 'jvectormap'
 
@@ -22,7 +21,7 @@ function onCreateFactory (attrs) {
 }
 
 function onCreate (element, attrs) {
-  const $element = $(element)
+  const $element = jQuery(element)
   const data = parseJson(attrs.data) || {}
 
   $element.vectorMap(data)
@@ -38,7 +37,7 @@ function onUpdateFactory (attrs) {
 }
 
 function onUpdate (element, attrs) {
-  const $element = $(element)
+  const $element = jQuery(element)
   const data = parseJson(attrs.data) || {}
 
   Object.entries(data).map(([key, value]) => {

@@ -1,7 +1,6 @@
 import { x } from 'xatto'
 
-import * as jqueryProxy from 'jquery'
-const $ = jqueryProxy
+import { default as jQuery } from 'jquery'
 
 import 'jquery-sparkline'
 
@@ -23,12 +22,12 @@ function onCreateFactory (attrs) {
 }
 
 function onCreate (element, attrs) {
-  const $element = $(element)
+  const $element = jQuery(element)
   const data = parseJson(attrs.data) || 'html'
   const options = $element.data() || {}
   const type = attrs.type || 'bar'
 
-  $(element).sparkline(data, {
+  $element.sparkline(data, {
     type,
     ...options
   })

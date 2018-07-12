@@ -2,8 +2,7 @@ import { x } from 'xatto'
 
 import * as Chart from 'chart.js'
 
-import * as jqueryProxy from 'jquery'
-const $ = jqueryProxy
+import { default as jQuery } from 'jquery'
 
 import { deepSet, flattenObject, parseJson } from './helpers'
 
@@ -25,7 +24,7 @@ function onCreateFactory (attrs) {
 
 function onCreate (element, attrs) {
   const ctx = element.getContext('2d')
-  const $element = $(element)
+  const $element = jQuery(element)
   const options = $element.data() || {}
   const type = attrs.type || 'line'
   const data = parseJson(attrs.data) || {}

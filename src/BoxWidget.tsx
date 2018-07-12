@@ -1,7 +1,6 @@
 import { x } from 'xatto'
 
-import * as jqueryProxy from 'jquery'
-const $ = jqueryProxy
+import { default as jQuery } from 'jquery'
 
 import 'admin-lte'
 
@@ -19,5 +18,5 @@ export function BoxWidget ({ xa, ...attrs }, children) {
 }
 
 function onCreate (element) {
-  $(element).boxWidget()
+  jQuery(element).boxWidget()
 }

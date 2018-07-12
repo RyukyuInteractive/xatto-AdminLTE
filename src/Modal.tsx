@@ -1,7 +1,6 @@
 import { x } from 'xatto'
 
-import * as jqueryProxy from 'jquery'
-const $ = jqueryProxy
+import { default as jQuery } from 'jquery'
 
 import 'bootstrap'
 
@@ -33,7 +32,7 @@ function onCreateFactory (attrs) {
 }
 
 function onCreate (element, attrs) {
-  const $element = $(element)
+  const $element = jQuery(element)
   $element.modal()
 
   Object.entries(attrs).map(([key, value]) => {
@@ -52,7 +51,7 @@ function onRemoveFactory (attrs) {
 }
 
 function onRemove (element, done, attrs) {
-  const $element = $(element)
+  const $element = jQuery(element)
   $element.one('hidden.bs.modal', done)
   $element.modal('hide')
 

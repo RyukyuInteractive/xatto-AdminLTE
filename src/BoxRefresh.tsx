@@ -1,7 +1,6 @@
 import { x } from 'xatto'
 
-import * as jqueryProxy from 'jquery'
-const $ = jqueryProxy
+import { default as jQuery } from 'jquery'
 
 import 'admin-lte'
 
@@ -14,5 +13,5 @@ export function BoxRefresh ({ xa, ...attrs }, children) {
 }
 
 function onCreate (element) {
-  $(element).boxRefresh()
+  jQuery(element).boxRefresh()
 }
