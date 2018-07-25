@@ -5,7 +5,7 @@ import { default as jQuery } from 'jquery'
 import 'bootstrap'
 
 export function Modal (attrs, children) {
-  return (state, actions) => (
+  return (
     <div
       role="dialog"
       tabindex="-1"
