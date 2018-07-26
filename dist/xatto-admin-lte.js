@@ -290,7 +290,7 @@
     }
 
     function Modal(attrs, children) {
-        return function (state, actions) { return (xatto.x("div", __assign({ role: "dialog", tabindex: "-1" }, filterEvents(attrs), { class: attrs.class + ' modal fade', oncreate: onCreateFactory$3(attrs), onremove: onRemoveFactory(attrs) }), children)); };
+        return (xatto.x("div", __assign({ role: "dialog", tabindex: "-1" }, filterEvents(attrs), { class: attrs.class + ' modal fade', oncreate: onCreateFactory$3(attrs), onremove: onRemoveFactory(attrs) }), children));
     }
     var eventsMap = {
         onhidden: 'hidden.bs.modal',
