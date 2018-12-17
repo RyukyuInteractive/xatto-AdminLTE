@@ -1,2 +1,5 @@
 import 'bootstrap';
-export declare function Modal(attrs: any, children: any): any;
+export declare function Modal({ xa, ...props }: {
+    [x: string]: any;
+    xa: any;
+}, children: any): any;

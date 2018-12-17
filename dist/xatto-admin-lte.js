@@ -43,73 +43,93 @@
     }
 
     function BoxRefresh(_a, children) {
-        var xa = _a.xa, attrs = __rest(_a, ["xa"]);
-        return (xatto.x("div", __assign({ oncreate: onCreate }, attrs), children));
+        var xa = _a.xa, props = __rest(_a, ["xa"]);
+        return (xatto.x("div", __assign({}, props, { oncreate: onCreate, tier: props }), children));
     }
-    function onCreate(element) {
-        jQuery(element).boxRefresh();
-    }
+    var onCreate = xatto.currentOnly(function (context, detail, props, event) {
+        jQuery(event.target).boxRefresh();
+        if (props.tier.oncreate) {
+            props.tier.oncreate(context, detail, props, event);
+        }
+    });
 
     function BoxWidget(_a, children) {
-        var xa = _a.xa, attrs = __rest(_a, ["xa"]);
-        if (null == attrs.class) {
-            attrs.class = '';
+        var xa = _a.xa, props = __rest(_a, ["xa"]);
+        return (xatto.x("div", __assign({}, props, { class: [props.class, 'box'].filter(Boolean).join(' '), oncreate: onCreate$1, tier: props }), children));
+    }
+    var onCreate$1 = xatto.currentOnly(function (context, detail, props, event) {
+        jQuery(event.target).boxWidget();
+        if (props.tier.oncreate) {
+            props.tier.oncreate(context, detail, props, event);
         }
-        attrs.class += ' box';
-        return (xatto.x("div", __assign({ oncreate: onCreate$1 }, attrs), children));
-    }
-    function onCreate$1(element) {
-        jQuery(element).boxWidget();
-    }
+    });
 
     function ControlSidebar(_a, children) {
-        var xa = _a.xa, attrs = __rest(_a, ["xa"]);
-        return (xatto.x("div", __assign({ oncreate: onCreate$2 }, attrs), children));
+        var xa = _a.xa, props = __rest(_a, ["xa"]);
+        return (xatto.x("div", __assign({}, props, { oncreate: onCreate$2, tier: props }), children));
     }
-    function onCreate$2(element) {
-        jQuery(element).controlSidebar();
-    }
+    var onCreate$2 = xatto.currentOnly(function (context, detail, props, event) {
+        jQuery(event.target).controlSidebar();
+        if (props.tier.oncreate) {
+            props.tier.oncreate(context, detail, props, event);
+        }
+    });
 
     function DirectChat(_a, children) {
         var xa = _a.xa, attrs = __rest(_a, ["xa"]);
         return (xatto.x("div", __assign({ oncreate: onCreate$3 }, attrs), children));
     }
-    function onCreate$3(element) {
-        jQuery(element).directChat();
-    }
+    var onCreate$3 = xatto.currentOnly(function (context, detail, props, event) {
+        jQuery(event.target).directChat();
+        if (props.tier.oncreate) {
+            props.tier.oncreate(context, detail, props, event);
+        }
+    });
 
     function Layout(_a, children) {
-        var xa = _a.xa, attrs = __rest(_a, ["xa"]);
-        return (xatto.x("div", __assign({ oncreate: onCreate$4 }, attrs),
+        var xa = _a.xa, props = __rest(_a, ["xa"]);
+        return (xatto.x("div", __assign({}, props, { oncreate: onCreate$4, tier: props }),
             xatto.x("div", { class: "wrapper" }, children)));
     }
-    function onCreate$4(element) {
-        jQuery(element).layout();
-    }
+    var onCreate$4 = xatto.currentOnly(function (context, detail, props, event) {
+        jQuery(event.target).layout();
+        if (props.tier.oncreate) {
+            props.tier.oncreate(context, detail, props, event);
+        }
+    });
 
     function PushMenu(_a, children) {
-        var xa = _a.xa, attrs = __rest(_a, ["xa"]);
-        return (xatto.x("div", __assign({ oncreate: onCreate$5 }, attrs), children));
+        var xa = _a.xa, props = __rest(_a, ["xa"]);
+        return (xatto.x("div", __assign({}, props, { oncreate: onCreate$5, tier: props }), children));
     }
-    function onCreate$5(element) {
-        jQuery(element).pushMenu();
-    }
+    var onCreate$5 = xatto.currentOnly(function (context, detail, props, event) {
+        jQuery(event.target).pushMenu();
+        if (props.tier.oncreate) {
+            props.tier.oncreate(context, detail, props, event);
+        }
+    });
 
     function TodoList(_a, children) {
-        var xa = _a.xa, attrs = __rest(_a, ["xa"]);
-        return (xatto.x("div", __assign({ oncreate: onCreate$6 }, attrs), children));
+        var xa = _a.xa, props = __rest(_a, ["xa"]);
+        return (xatto.x("div", __assign({}, props, { oncreate: onCreate$6, tier: props }), children));
     }
-    function onCreate$6(element) {
-        jQuery(element).todoList();
-    }
+    var onCreate$6 = xatto.currentOnly(function (context, detail, props, event) {
+        jQuery(event.target).todoList();
+        if (props.tier.oncreate) {
+            props.tier.oncreate(context, detail, props, event);
+        }
+    });
 
     function Tree(_a, children) {
-        var xa = _a.xa, attrs = __rest(_a, ["xa"]);
-        return (xatto.x("ul", __assign({ oncreate: onCreate$7 }, attrs), children));
+        var xa = _a.xa, props = __rest(_a, ["xa"]);
+        return (xatto.x("ul", __assign({}, props, { oncreate: onCreate$7, tier: props }), children));
     }
-    function onCreate$7(element) {
-        jQuery(element).tree();
-    }
+    var onCreate$7 = xatto.currentOnly(function (context, detail, props, event) {
+        jQuery(event.target).tree();
+        if (props.tier.oncreate) {
+            props.tier.oncreate(context, detail, props, event);
+        }
+    });
 
     /**
      * Get an item from an object using separator notation.
@@ -210,18 +230,16 @@
     }
 
     function ChartX(_a, children) {
-        var xa = _a.xa, attrs = __rest(_a, ["xa"]);
-        return (xatto.x("canvas", __assign({}, attrs, { oncreate: onCreateFactory(attrs), onupdate: onUpdateFactory(attrs) }), children));
+        var xa = _a.xa, props = __rest(_a, ["xa"]);
+        return (xatto.x("canvas", __assign({}, props, { oncreate: onCreate$8, onupdate: onUpdate, tier: props }), children));
     }
-    function onCreateFactory(attrs) {
-        return function (element) { return onCreate$8(element, attrs); };
-    }
-    function onCreate$8(element, attrs) {
+    var onCreate$8 = xatto.currentOnly(function (context, detail, props, event) {
+        var element = event.target;
         var ctx = element.getContext('2d');
         var $element = jQuery(element);
         var options = $element.data() || {};
-        var type = attrs.type || 'line';
-        var data = parseJson(attrs.data) || {};
+        var type = props.type || 'line';
+        var data = parseJson(props.data) || {};
         // // chart.js v2 and newer
         // element.chart = new ChartJS(ctx, {
         //   type,
@@ -230,111 +248,109 @@
         // })
         var method = type[0].toUpperCase() + type.slice(1);
         element.chart = new Chart(ctx)[method](data, options);
-    }
-    function onUpdateFactory(attrs) {
-        return function (element) { return onUpdate(element, attrs); };
-    }
-    function onUpdate(element, attrs) {
-        var data = parseJson(attrs.data) || {};
+        if (props.tier.oncreate) {
+            props.tier.oncreate(context, detail, props, event);
+        }
+    });
+    var onUpdate = xatto.currentOnly(function (context, detail, props, event) {
+        var element = event.target;
+        var data = parseJson(props.data) || {};
         // // chart.js v2.6 and newer
         // element.chart.data = data
-        Object.entries(flattenObject(data.datasets || {})).map(function (_a) {
-            var key = _a[0], value = _a[1];
-            return deepSet(element.chart.datasets, key, value);
-        });
+        var datasets = flattenObject(data.datasets || {});
+        for (var key in datasets) {
+            if (datasets.hasOwnProperty(key)) {
+                var value = datasets[key];
+                deepSet(element.chart.datasets, key, value);
+            }
+        }
         element.chart.update();
-    }
+        if (props.tier.onupdate) {
+            props.tier.onupdate(context, detail, props, event);
+        }
+    });
 
     function Sparklines(_a, children) {
-        var xa = _a.xa, attrs = __rest(_a, ["xa"]);
-        return (xatto.x("div", __assign({}, attrs, { oncreate: onCreateFactory$1(attrs) }), children));
+        var xa = _a.xa, props = __rest(_a, ["xa"]);
+        return (xatto.x("div", __assign({}, props, { oncreate: onCreate$9, tier: props }), children));
     }
-    function onCreateFactory$1(attrs) {
-        return function (element) { return onCreate$9(element, attrs); };
-    }
-    function onCreate$9(element, attrs) {
-        var $element = jQuery(element);
-        var data = parseJson(attrs.data) || 'html';
+    var onCreate$9 = xatto.currentOnly(function (context, detail, props, event) {
+        var $element = jQuery(event.target);
+        var data = parseJson(props.data) || 'html';
         var options = $element.data() || {};
-        var type = attrs.type || 'bar';
+        var type = props.type || 'bar';
         $element.sparkline(data, __assign({ type: type }, options));
-    }
+        if (props.tier.oncreate) {
+            props.tier.oncreate(context, detail, props, event);
+        }
+    });
 
-    function VectorMap(attrs, children) {
-        return (xatto.x("div", __assign({}, attrs, { oncreate: onCreateFactory$2(attrs), onupdate: onUpdateFactory$1(attrs) })));
+    function VectorMap(_a, children) {
+        var xa = _a.xa, props = __rest(_a, ["xa"]);
+        return (xatto.x("div", __assign({}, props, { oncreate: onCreate$10, onupdate: onUpdate$1, tier: props })));
     }
-    function onCreateFactory$2(attrs) {
-        return function (element) { return onCreate$10(element, attrs); };
-    }
-    function onCreate$10(element, attrs) {
-        var $element = jQuery(element);
-        var data = parseJson(attrs.data) || {};
+    var onCreate$10 = xatto.currentOnly(function (context, detail, props, event) {
+        var $element = jQuery(event.target);
+        var data = parseJson(props.data) || {};
         $element.vectorMap(data);
-    }
+        if (props.tier.oncreate) {
+            props.tier.oncreate(context, detail, props, event);
+        }
+    });
     var settables = {
         backgroundColor: 1,
         focus: 1
     };
-    function onUpdateFactory$1(attrs) {
-        return function (element) { return onUpdate$1(element, attrs); };
-    }
-    function onUpdate$1(element, attrs) {
-        var $element = jQuery(element);
-        var data = parseJson(attrs.data) || {};
-        Object.entries(data).map(function (_a) {
-            var key = _a[0], value = _a[1];
-            if (settables[key]) {
-                $element.vectorMap('set', key, value);
+    var onUpdate$1 = xatto.currentOnly(function (context, detail, props, event) {
+        var $element = jQuery(event.target);
+        var data = parseJson(props.data) || {};
+        for (var key in data) {
+            if (data.hasOwnProperty(key)) {
+                var value = data[key];
+                if (settables[key]) {
+                    $element.vectorMap('set', key, value);
+                }
             }
-        });
-    }
+        }
+        if (props.tier.onupdate) {
+            props.tier.onupdate(context, detail, props, event);
+        }
+    });
 
-    function Modal(attrs, children) {
-        return (xatto.x("div", __assign({ role: "dialog", tabindex: "-1" }, filterEvents(attrs), { class: attrs.class + ' modal fade', oncreate: onCreateFactory$3(attrs), onremove: onRemoveFactory(attrs) }), children));
+    function Modal(_a, children) {
+        var xa = _a.xa, props = __rest(_a, ["xa"]);
+        return (xatto.x("div", __assign({ role: "dialog", tabindex: "-1" }, props, { class: props.class + ' modal fade', oncreate: onCreate$11, onremove: onRemove, tier: props }), children));
     }
     var eventsMap = {
-        onhidden: 'hidden.bs.modal',
-        onhide: 'hide.bs.modal',
-        onloaded: 'loaded.bs.modal',
-        onshow: 'show.bs.modal',
-        onshown: 'shown.bs.modal'
+        hidden: 'hidden.bs.modal',
+        hide: 'hide.bs.modal',
+        loaded: 'loaded.bs.modal',
+        show: 'show.bs.modal',
+        shown: 'shown.bs.modal'
     };
-    function onCreateFactory$3(attrs) {
-        return function (element) { return onCreate$11(element, attrs); };
-    }
-    function onCreate$11(element, attrs) {
-        var $element = jQuery(element);
+    var onCreate$11 = xatto.currentOnly(function (context, detail, props, event) {
+        var $element = jQuery(event.target);
         $element.modal();
-        Object.entries(attrs).map(function (_a) {
-            var key = _a[0], value = _a[1];
-            if (eventsMap[key]) {
-                $element.on(eventsMap[key], value);
+        for (var key in props) {
+            if (props.hasOwnProperty(key)) {
+                var value = props[key];
+                if (eventsMap[key]) {
+                    $element.on(eventsMap[key], value);
+                }
             }
-        });
-        if (attrs.oncreate) {
-            attrs.oncreate(element);
         }
-    }
-    function onRemoveFactory(attrs) {
-        return function (element, done) { return onRemove(element, done, attrs); };
-    }
-    function onRemove(element, done, attrs) {
-        var $element = jQuery(element);
-        $element.one('hidden.bs.modal', done);
+        if (props.tier.oncreate) {
+            props.tier.oncreate(context, detail, props, event);
+        }
+    });
+    var onRemove = xatto.currentOnly(function (context, detail, props, event) {
+        var $element = jQuery(event.target);
+        $element.one('hidden.bs.modal', detail.done);
         $element.modal('hide');
-        if (attrs.onremove) {
-            attrs.onremove(element, done);
+        if (props.tier.onremove) {
+            props.tier.onremove(context, detail, props, event);
         }
-    }
-    function filterEvents(attrs) {
-        return Object.entries(attrs).reduce(function (acc, _a) {
-            var key = _a[0], value = _a[1];
-            if (!(key in eventsMap)) {
-                acc[key] = value;
-            }
-            return acc;
-        }, {});
-    }
+    });
 
     exports.BoxRefresh = BoxRefresh;
     exports.BoxWidget = BoxWidget;

@@ -1,5 +1,5 @@
 import 'admin-lte';
-export declare function Layout({ xa, ...attrs }: {
+export declare function Layout({ xa, ...props }: {
     [x: string]: any;
     xa: any;
 }, children: any): any;
