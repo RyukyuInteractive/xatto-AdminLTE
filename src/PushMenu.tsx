@@ -1,17 +1,26 @@
-import { x } from 'xatto'
+import { x, currentOnly } from 'xatto'
 
 import { default as jQuery } from 'jquery'
 
 import 'admin-lte'
 
-export function PushMenu ({ xa, ...attrs }, children) {
+export function PushMenu ({ xa, ...props }, children) {
   return (
-    <div oncreate={onCreate} {...attrs}>
+    <div
+      {...props}
+
+      oncreate={onCreate}
+      tier={props}
+    >
       {children}
     </div>
   )
 }
 
-function onCreate (element) {
-  jQuery(element).pushMenu()
-}
+const onCreate = currentOnly((context, detail, props, event) => {
+  jQuery(event.target).pushMenu()
+
+  if (props.tier.oncreate) {
+    props.tier.oncreate(context, detail, props, event)
+  }
+})

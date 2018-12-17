@@ -1,4 +1,4 @@
-import { x } from 'xatto'
+import { x, currentOnly } from 'xatto'
 
 import { default as jQuery } from 'jquery'
 
@@ -12,6 +12,10 @@ export function DirectChat ({ xa, ...attrs }, children) {
   )
 }
 
-function onCreate (element) {
-  jQuery(element).directChat()
-}
+const onCreate = currentOnly((context, detail, props, event) => {
+  jQuery(event.target).directChat()
+
+  if (props.tier.oncreate) {
+    props.tier.oncreate(context, detail, props, event)
+  }
+})

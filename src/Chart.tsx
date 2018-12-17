@@ -1,4 +1,4 @@
-import { x } from 'xatto'
+import { x, currentOnly } from 'xatto'
 
 import * as Chart from 'chart.js'
 
@@ -6,28 +6,28 @@ import { default as jQuery } from 'jquery'
 
 import { deepSet, flattenObject, parseJson } from './helpers'
 
-export function ChartX ({ xa, ...attrs }, children) {
+export function ChartX ({ xa, ...props }, children) {
   return (
     <canvas
-      {...attrs}
-      oncreate={onCreateFactory(attrs)}
-      onupdate={onUpdateFactory(attrs)}
+      {...props}
+
+      oncreate={onCreate}
+      onupdate={onUpdate}
+      tier={props}
     >
       {children}
     </canvas>
   )
 }
 
-function onCreateFactory (attrs) {
-  return (element) => onCreate(element, attrs)
-}
 
-function onCreate (element, attrs) {
+const onCreate = currentOnly((context, detail, props, event) => {
+  const element = event.target
   const ctx = element.getContext('2d')
   const $element = jQuery(element)
   const options = $element.data() || {}
-  const type = attrs.type || 'line'
-  const data = parseJson(attrs.data) || {}
+  const type = props.type || 'line'
+  const data = parseJson(props.data) || {}
 
   // // chart.js v2 and newer
   // element.chart = new ChartJS(ctx, {
@@ -38,21 +38,32 @@ function onCreate (element, attrs) {
 
   const method = type[0].toUpperCase() + type.slice(1)
   element.chart = new Chart(ctx)[method](data, options)
-}
 
-function onUpdateFactory (attrs) {
-  return (element) => onUpdate(element, attrs)
-}
+  if (props.tier.oncreate) {
+    props.tier.oncreate(context, detail, props, event)
+  }
+})
 
-function onUpdate (element, attrs) {
-  const data: any = parseJson(attrs.data) || {}
+const onUpdate = currentOnly((context, detail, props, event) => {
+  const element = event.target
+  const data: any = parseJson(props.data) || {}
 
   // // chart.js v2.6 and newer
   // element.chart.data = data
 
-  Object.entries(flattenObject(data.datasets || {})).map(([key, value]) =>
-    deepSet(element.chart.datasets, key, value)
-  )
+  const datasets = flattenObject(data.datasets || {})
+
+  for (const key in datasets) {
+    if (datasets.hasOwnProperty(key)) {
+      const value = datasets[key]
+      deepSet(element.chart.datasets, key, value)
+    }
+  }
 
   element.chart.update()
-}
+
+
+  if (props.tier.onupdate) {
+    props.tier.onupdate(context, detail, props, event)
+  }
+})

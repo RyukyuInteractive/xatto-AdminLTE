@@ -1,4 +1,4 @@
-import { x } from 'xatto'
+import { x, currentOnly } from 'xatto'
 
 import { default as jQuery } from 'jquery'
 
@@ -6,29 +6,31 @@ import 'jquery-sparkline'
 
 import { parseJson } from './helpers'
 
-export function Sparklines ({ xa, ...attrs }, children) {
+export function Sparklines ({ xa, ...props }, children) {
   return (
     <div
-      {...attrs}
-      oncreate={onCreateFactory(attrs)}
+      {...props}
+
+      oncreate={onCreate}
+      tier={props}
     >
       {children}
     </div>
   )
 }
 
-function onCreateFactory (attrs) {
-  return (element) => onCreate(element, attrs)
-}
-
-function onCreate (element, attrs) {
-  const $element = jQuery(element)
-  const data = parseJson(attrs.data) || 'html'
+const onCreate = currentOnly((context, detail, props, event) => {
+  const $element = jQuery(event.target)
+  const data = parseJson(props.data) || 'html'
   const options = $element.data() || {}
-  const type = attrs.type || 'bar'
+  const type = props.type || 'bar'
 
   $element.sparkline(data, {
     type,
     ...options
   })
-}
+
+  if (props.tier.oncreate) {
+    props.tier.oncreate(context, detail, props, event)
+  }
+})

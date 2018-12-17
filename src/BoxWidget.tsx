@@ -1,22 +1,27 @@
-import { x } from 'xatto'
+import { x, currentOnly } from 'xatto'
 
 import { default as jQuery } from 'jquery'
 
 import 'admin-lte'
 
-export function BoxWidget ({ xa, ...attrs }, children) {
-  if (null == attrs.class) {
-    attrs.class = ''
-  }
-  attrs.class += ' box'
-
+export function BoxWidget ({ xa, ...props }, children) {
   return (
-    <div oncreate={onCreate} {...attrs}>
+    <div
+      {...props}
+
+      class={[props.class, 'box'].filter(Boolean).join(' ')}
+      oncreate={onCreate}
+      tier={props}
+    >
       {children}
     </div>
   )
 }
 
-function onCreate (element) {
-  jQuery(element).boxWidget()
-}
+const onCreate = currentOnly((context, detail, props, event) => {
+  jQuery(event.target).boxWidget()
+
+  if (props.tier.oncreate) {
+    props.tier.oncreate(context, detail, props, event)
+  }
+})

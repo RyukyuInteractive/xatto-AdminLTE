@@ -58,6 +58,6 @@
   },
   "dependencies": {
     "admin-lte": "^2.4.3",
-    "xatto": "^0.1.13"
+    "xatto": "^1.0.0"
   }
 }

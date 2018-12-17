@@ -1,17 +1,26 @@
-import { x } from 'xatto'
+import { x, currentOnly } from 'xatto'
 
 import { default as jQuery } from 'jquery'
 
 import 'admin-lte'
 
-export function BoxRefresh ({ xa, ...attrs }, children) {
+export function BoxRefresh ({ xa, ...props }, children) {
   return (
-    <div oncreate={onCreate} {...attrs}>
+    <div
+      {...props}
+
+      oncreate={onCreate}
+      tier={props}
+    >
       {children}
     </div>
   )
 }
 
-function onCreate (element) {
-  jQuery(element).boxRefresh()
-}
+const onCreate = currentOnly((context, detail, props, event) => {
+  jQuery(event.target).boxRefresh()
+
+  if (props.tier.oncreate) {
+    props.tier.oncreate(context, detail, props, event)
+  }
+})

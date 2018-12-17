@@ -1,18 +1,21 @@
-import { x } from 'xatto'
+import { x, currentOnly } from 'xatto'
 
 import { default as jQuery } from 'jquery'
 
 import 'bootstrap'
 
-export function Modal (attrs, children) {
+export function Modal ({ xa, ...props }, children) {
   return (
     <div
       role="dialog"
       tabindex="-1"
-      {...filterEvents(attrs)}
-      class={attrs.class + ' modal fade'}
-      oncreate={onCreateFactory(attrs)}
-      onremove={onRemoveFactory(attrs)}
+
+      {...props}
+
+      class={props.class + ' modal fade'}
+      oncreate={onCreate}
+      onremove={onRemove}
+      tier={props}
     >
       {children}
     </div>
@@ -20,51 +23,37 @@ export function Modal (attrs, children) {
 }
 
 const eventsMap = {
-  onhidden: 'hidden.bs.modal',
-  onhide: 'hide.bs.modal',
-  onloaded: 'loaded.bs.modal',
-  onshow: 'show.bs.modal',
-  onshown: 'shown.bs.modal'
+  hidden: 'hidden.bs.modal',
+  hide: 'hide.bs.modal',
+  loaded: 'loaded.bs.modal',
+  show: 'show.bs.modal',
+  shown: 'shown.bs.modal'
 }
 
-function onCreateFactory (attrs) {
-  return (element) => onCreate(element, attrs)
-}
-
-function onCreate (element, attrs) {
-  const $element = jQuery(element)
+const onCreate = currentOnly((context, detail, props, event) => {
+  const $element = jQuery(event.target)
   $element.modal()
 
-  Object.entries(attrs).map(([key, value]) => {
-    if (eventsMap[key]) {
-      $element.on(eventsMap[key], value)
+  for (const key in props) {
+    if (props.hasOwnProperty(key)) {
+      const value = props[key]
+      if (eventsMap[key]) {
+        $element.on(eventsMap[key], value)
+      }
     }
-  })
-
-  if (attrs.oncreate) {
-    attrs.oncreate(element)
   }
-}
 
-function onRemoveFactory (attrs) {
-  return (element, done) => onRemove(element, done, attrs)
-}
+  if (props.tier.oncreate) {
+    props.tier.oncreate(context, detail, props, event)
+  }
+})
 
-function onRemove (element, done, attrs) {
-  const $element = jQuery(element)
-  $element.one('hidden.bs.modal', done)
+const onRemove = currentOnly((context, detail, props, event) => {
+  const $element = jQuery(event.target)
+  $element.one('hidden.bs.modal', detail.done)
   $element.modal('hide')
 
-  if (attrs.onremove) {
-    attrs.onremove(element, done)
+  if (props.tier.onremove) {
+    props.tier.onremove(context, detail, props, event)
   }
-}
-
-function filterEvents (attrs) {
-  return Object.entries(attrs).reduce((acc, [key, value]) => {
-    if (!(key in eventsMap)) {
-      acc[key] = value
-    }
-    return acc
-  }, {})
-}
+})

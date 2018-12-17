@@ -1,4 +1,4 @@
-import { x } from 'xatto'
+import { x, currentOnly } from 'xatto'
 
 import { default as jQuery } from 'jquery'
 
@@ -6,43 +6,48 @@ import 'jvectormap'
 
 import { parseJson } from './helpers'
 
-export function VectorMap (attrs, children) {
+export function VectorMap ({ xa, ...props }, children) {
   return (
     <div
-      {...attrs}
-      oncreate={onCreateFactory(attrs)}
-      onupdate={onUpdateFactory(attrs)}
+      {...props}
+
+      oncreate={onCreate}
+      onupdate={onUpdate}
+      tier={props}
     />
   )
 }
 
-function onCreateFactory (attrs) {
-  return (element) => onCreate(element, attrs)
-}
-
-function onCreate (element, attrs) {
-  const $element = jQuery(element)
-  const data = parseJson(attrs.data) || {}
+const onCreate = currentOnly((context, detail, props, event) => {
+  const $element = jQuery(event.target)
+  const data = parseJson(props.data) || {}
 
   $element.vectorMap(data)
-}
+
+  if (props.tier.oncreate) {
+    props.tier.oncreate(context, detail, props, event)
+  }
+})
 
 const settables = {
   backgroundColor: 1,
   focus: 1
 }
 
-function onUpdateFactory (attrs) {
-  return (element) => onUpdate(element, attrs)
-}
+const onUpdate = currentOnly((context, detail, props, event) => {
+  const $element = jQuery(event.target)
+  const data = parseJson(props.data) || {}
 
-function onUpdate (element, attrs) {
-  const $element = jQuery(element)
-  const data = parseJson(attrs.data) || {}
-
-  Object.entries(data).map(([key, value]) => {
-    if (settables[key]) {
-      $element.vectorMap('set', key, value)
+  for (const key in data) {
+    if (data.hasOwnProperty(key)) {
+      const value = data[key]
+      if (settables[key]) {
+        $element.vectorMap('set', key, value)
+      }
     }
-  })
-}
+  }
+
+  if (props.tier.onupdate) {
+    props.tier.onupdate(context, detail, props, event)
+  }
+})
