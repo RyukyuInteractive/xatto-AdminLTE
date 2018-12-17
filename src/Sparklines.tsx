@@ -19,7 +19,15 @@ export function Sparklines ({ xa, ...props }, children) {
   )
 }
 
-const onCreate = currentOnly((context, detail, props, event) => {
+function onCreate (context, detail, props, event) {
+  onCreateMain(context, detail, props, event)
+
+  if (props.tier.oncreate) {
+    return props.tier.oncreate(context, detail, props, event)
+  }
+}
+
+const onCreateMain = currentOnly((context, detail, props, event) => {
   const $element = jQuery(event.target)
   const data = parseJson(props.data) || 'html'
   const options = $element.data() || {}
@@ -29,8 +37,4 @@ const onCreate = currentOnly((context, detail, props, event) => {
     type,
     ...options
   })
-
-  if (props.tier.oncreate) {
-    props.tier.oncreate(context, detail, props, event)
-  }
 })

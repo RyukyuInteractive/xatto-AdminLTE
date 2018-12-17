@@ -20,8 +20,15 @@ export function ChartX ({ xa, ...props }, children) {
   )
 }
 
+function onCreate (context, detail, props, event) {
+  onCreateMain(context, detail, props, event)
 
-const onCreate = currentOnly((context, detail, props, event) => {
+  if (props.tier.oncreate) {
+    return props.tier.oncreate(context, detail, props, event)
+  }
+}
+
+const onCreateMain = currentOnly((context, detail, props, event) => {
   const element = event.target
   const ctx = element.getContext('2d')
   const $element = jQuery(element)
@@ -38,13 +45,17 @@ const onCreate = currentOnly((context, detail, props, event) => {
 
   const method = type[0].toUpperCase() + type.slice(1)
   element.chart = new Chart(ctx)[method](data, options)
-
-  if (props.tier.oncreate) {
-    props.tier.oncreate(context, detail, props, event)
-  }
 })
 
-const onUpdate = currentOnly((context, detail, props, event) => {
+function onUpdate (context, detail, props, event) {
+  onUpdateMain(context, detail, props, event)
+
+  if (props.tier.onupdate) {
+    return props.tier.onupdate(context, detail, props, event)
+  }
+}
+
+const onUpdateMain = currentOnly((context, detail, props, event) => {
   const element = event.target
   const data: any = parseJson(props.data) || {}
 
@@ -61,9 +72,4 @@ const onUpdate = currentOnly((context, detail, props, event) => {
   }
 
   element.chart.update()
-
-
-  if (props.tier.onupdate) {
-    props.tier.onupdate(context, detail, props, event)
-  }
 })

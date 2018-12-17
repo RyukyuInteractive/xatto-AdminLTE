@@ -17,10 +17,14 @@ export function BoxRefresh ({ xa, ...props }, children) {
   )
 }
 
-const onCreate = currentOnly((context, detail, props, event) => {
-  jQuery(event.target).boxRefresh()
+function onCreate (context, detail, props, event) {
+  onCreateMain(context, detail, props, event)
 
   if (props.tier.oncreate) {
-    props.tier.oncreate(context, detail, props, event)
+    return props.tier.oncreate(context, detail, props, event)
   }
+}
+
+const onCreateMain = currentOnly((context, detail, props, event) => {
+  jQuery(event.target).boxRefresh()
 })

@@ -18,10 +18,18 @@ export function BoxWidget ({ xa, ...props }, children) {
   )
 }
 
-const onCreate = currentOnly((context, detail, props, event) => {
+function onCreate (context, detail, props, event) {
+  onCreateMain(context, detail, props, event)
+
+  if (props.tier.oncreate) {
+    return props.tier.oncreate(context, detail, props, event)
+  }
+}
+
+const onCreateMain = currentOnly((context, detail, props, event) => {
   jQuery(event.target).boxWidget()
 
   if (props.tier.oncreate) {
-    props.tier.oncreate(context, detail, props, event)
+    return props.tier.oncreate(context, detail, props, event)
   }
 })

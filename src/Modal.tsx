@@ -30,7 +30,15 @@ const eventsMap = {
   shown: 'shown.bs.modal'
 }
 
-const onCreate = currentOnly((context, detail, props, event) => {
+function onCreate (context, detail, props, event) {
+  onCreateMain(context, detail, props, event)
+
+  if (props.tier.oncreate) {
+    return props.tier.oncreate(context, detail, props, event)
+  }
+}
+
+const onCreateMain = currentOnly((context, detail, props, event) => {
   const $element = jQuery(event.target)
   $element.modal()
 
@@ -42,18 +50,22 @@ const onCreate = currentOnly((context, detail, props, event) => {
       }
     }
   }
-
-  if (props.tier.oncreate) {
-    props.tier.oncreate(context, detail, props, event)
-  }
 })
 
-const onRemove = currentOnly((context, detail, props, event) => {
+function onRemove (context, detail, props, event) {
+  onRemoveMain(context, detail, props, event)
+
+  if (props.tier.onremove) {
+    return props.tier.onremove(context, detail, props, event)
+  }
+}
+
+const onRemoveMain = currentOnly((context, detail, props, event) => {
   const $element = jQuery(event.target)
   $element.one('hidden.bs.modal', detail.done)
   $element.modal('hide')
 
   if (props.tier.onremove) {
-    props.tier.onremove(context, detail, props, event)
+    return props.tier.onremove(context, detail, props, event)
   }
 })

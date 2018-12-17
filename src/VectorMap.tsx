@@ -18,15 +18,19 @@ export function VectorMap ({ xa, ...props }, children) {
   )
 }
 
-const onCreate = currentOnly((context, detail, props, event) => {
+function onCreate (context, detail, props, event) {
+  onCreateMain(context, detail, props, event)
+
+  if (props.tier.oncreate) {
+    return props.tier.oncreate(context, detail, props, event)
+  }
+}
+
+const onCreateMain = currentOnly((context, detail, props, event) => {
   const $element = jQuery(event.target)
   const data = parseJson(props.data) || {}
 
   $element.vectorMap(data)
-
-  if (props.tier.oncreate) {
-    props.tier.oncreate(context, detail, props, event)
-  }
 })
 
 const settables = {
@@ -34,7 +38,15 @@ const settables = {
   focus: 1
 }
 
-const onUpdate = currentOnly((context, detail, props, event) => {
+function onUpdate (context, detail, props, event) {
+  onUpdateMain(context, detail, props, event)
+
+  if (props.tier.onupdate) {
+    return props.tier.onupdate(context, detail, props, event)
+  }
+}
+
+const onUpdateMain = currentOnly((context, detail, props, event) => {
   const $element = jQuery(event.target)
   const data = parseJson(props.data) || {}
 
@@ -45,9 +57,5 @@ const onUpdate = currentOnly((context, detail, props, event) => {
         $element.vectorMap('set', key, value)
       }
     }
-  }
-
-  if (props.tier.onupdate) {
-    props.tier.onupdate(context, detail, props, event)
   }
 })
