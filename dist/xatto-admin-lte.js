@@ -1,3 +1,8 @@
+/*
+xatto-admin-lte v0.0.2
+https://github.com/RyukyuInteractive/xatto-AdminLTE
+Released under the MIT License.
+*/
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('xatto'), require('jquery'), require('admin-lte'), require('chart.js'), require('jquery-sparkline'), require('jvectormap'), require('bootstrap')) :
     typeof define === 'function' && define.amd ? define(['exports', 'xatto', 'jquery', 'admin-lte', 'chart.js', 'jquery-sparkline', 'jvectormap', 'bootstrap'], factory) :

@@ -1,4 +1,11 @@
+import pkg from './package.json';
 import typescript from 'rollup-plugin-typescript2';
+
+const banner = `/*
+${pkg.name} v${pkg.version}
+https://github.com/RyukyuInteractive/xatto-AdminLTE
+Released under the ${pkg.license} License.
+*/`;
 
 export default {
   input: 'src/index.ts',
@@ -7,6 +14,7 @@ export default {
     format: 'umd',
     name: 'xatto-admin-lte',
     sourceMap: true,
+    banner,
   },
   plugins: [typescript({
     exclude: [

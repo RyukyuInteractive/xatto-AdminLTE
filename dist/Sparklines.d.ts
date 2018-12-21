@@ -1,5 +1,2 @@
 import 'jquery-sparkline';
-export declare function Sparklines({ xa, ...props }: {
-    [x: string]: any;
-    xa: any;
-}, children: any): any;
+export declare function Sparklines({ xa, ...props }: any, children: any): any;
