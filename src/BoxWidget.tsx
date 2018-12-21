@@ -4,7 +4,7 @@ import { default as jQuery } from 'jquery'
 
 import 'admin-lte'
 
-export function BoxWidget ({ xa, ...props }, children) {
+export function BoxWidget ({ xa, ...props }: any, children) {
   return (
     <div
       {...props}

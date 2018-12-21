@@ -4,7 +4,7 @@ import { default as jQuery } from 'jquery'
 
 import 'admin-lte'
 
-export function PushMenu ({ xa, ...props }, children) {
+export function PushMenu ({ xa, ...props }: any, children) {
   return (
     <div
       {...props}

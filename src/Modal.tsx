@@ -4,7 +4,7 @@ import { default as jQuery } from 'jquery'
 
 import 'bootstrap'
 
-export function Modal ({ xa, ...props }, children) {
+export function Modal ({ xa, ...props }: any, children) {
   return (
     <div
       role="dialog"

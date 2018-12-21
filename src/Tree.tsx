@@ -4,7 +4,7 @@ import { default as jQuery } from 'jquery'
 
 import 'admin-lte'
 
-export function Tree ({ xa, ...props }, children) {
+export function Tree ({ xa, ...props }: any, children) {
   return (
     <ul
       {...props}

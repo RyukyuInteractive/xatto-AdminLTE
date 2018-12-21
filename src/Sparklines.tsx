@@ -6,7 +6,7 @@ import 'jquery-sparkline'
 
 import { parseJson } from './helpers'
 
-export function Sparklines ({ xa, ...props }, children) {
+export function Sparklines ({ xa, ...props }: any, children) {
   return (
     <div
       {...props}

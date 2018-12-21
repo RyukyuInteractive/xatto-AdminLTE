@@ -6,7 +6,7 @@ import 'jvectormap'
 
 import { parseJson } from './helpers'
 
-export function VectorMap ({ xa, ...props }, children) {
+export function VectorMap ({ xa, ...props }: any, children) {
   return (
     <div
       {...props}

@@ -6,7 +6,7 @@ import { default as jQuery } from 'jquery'
 
 import { deepSet, flattenObject, parseJson } from './helpers'
 
-export function ChartX ({ xa, ...props }, children) {
+export function ChartX ({ xa, ...props }: any, children) {
   return (
     <canvas
       {...props}

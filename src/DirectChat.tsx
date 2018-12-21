@@ -4,7 +4,7 @@ import { default as jQuery } from 'jquery'
 
 import 'admin-lte'
 
-export function DirectChat ({ xa, ...attrs }, children) {
+export function DirectChat ({ xa, ...attrs }: any, children) {
   return (
     <div oncreate={onCreate} {...attrs}>
       {children}
